@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kỳ Thi Học Kỳ 2026 - Bứt Phá Giới Hạn & Bảng Vàng Top 36 HSG</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        outfit: ['"Outfit"', 'sans-serif'],
+                        mono: ['"Space Grotesk"', 'monospace'],
+                    },
+                    colors: {
+                        midnight: '#070c18',
+                        midnightCard: '#0f172a',
+                        cyanGlow: '#38bdf8',
+                        electricBlue: '#3b82f6',
+                        goldWinner: '#fbbf24',
+                        emeraldSuccess: '#10b981',
+                        violetFocus: '#8b5cf6'
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 3s infinite ease-in-out',
+                        'float-gentle': 'floatGentle 6s infinite ease-in-out',
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%, 100%': { filter: 'drop-shadow(0 0 15px rgba(56, 189, 248, 0.3))' },
+                            '50%': { filter: 'drop-shadow(0 0 35px rgba(59, 130, 246, 0.6))' },
+                        },
+                        floatGentle: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070c18;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+
+        body {
+            background-color: #070c18;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        .glow-text-cyan {
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+        }
+        .glow-text-gold {
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.6);
+        }
+
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(7, 12, 24, 0.9) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.15);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.5);
+        }
+        .glass-panel:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.15);
+        }
+
+        .reveal-node {
+            opacity: 0;
+            transform: translateY(35px) scale(0.98);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+        .reveal-node.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        #flashOverlay {
+            pointer-events: none;
+            transition: opacity 0.2s ease-out;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-cyanGlow selection:text-black">
+
+    <!-- Ambient Particle Canvas Background -->
+    <canvas id="ambientCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0"></canvas>
+
+    <!-- Shockwave Flash Visual FX Overlay -->
+    <div id="flashOverlay" class="fixed top-0 left-0 w-full h-full bg-cyan-400/10 opacity-0 z-30 pointer-events-none"></div>
+
+    <!-- Top Navigation & Branding Bar -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-midnight/90 backdrop-blur-md border-b border-slate-800/80 px-4 sm:px-8 py-3.5 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyanGlow via-electricBlue to-emeraldSuccess p-[1px] shadow-[0_0_15px_rgba(56,189,248,0.3)]">
+                <div class="w-full h-full bg-midnight rounded-[11px] flex items-center justify-center font-outfit font-black text-cyanGlow text-lg">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+            </div>
+            <div>
+                <span class="font-outfit text-xs tracking-[0.2em] text-cyanGlow uppercase font-bold block glow-text-cyan">HỌC KỲ 2026</span>
+                <span class="text-[11px] text-slate-400 font-mono tracking-wider block">BỨT PHÁ GIỚI HẠN • BẢNG VÀNG HSG</span>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <!-- Audio Focus Synthesizer Toggle -->
+            <button id="audioFocusToggle" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-700 text-xs font-mono text-slate-300 hover:text-cyanGlow hover:border-cyanGlow/50 transition-all">
+                <i id="audioIcon" class="fa-solid fa-headphones text-cyanGlow"></i>
+                <span id="audioStatus" class="hidden sm:inline">Focus Audio: Tắt</span>
+            </button>
+
+            <!-- Copyright Badge Header -->
+            <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950/40 border border-cyan-500/30 text-xs font-mono">
+                <span class="text-slate-400 hidden sm:inline">© 2026</span>
+                <span class="text-cyanGlow font-bold">minhduc290613</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Scroll Progress Line -->
+    <div class="fixed top-[65px] left-0 w-full h-[2px] z-50 bg-slate-900">
+        <div id="progressBar" class="h-full bg-gradient-to-r from-cyanGlow via-electricBlue to-emeraldSuccess w-0 transition-all duration-100 shadow-[0_0_10px_#38bdf8]"></div>
+    </div>
+
+    <!-- Side Navigation Dots -->
+    <nav class="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-4">
+        <a href="#hero" class="nav-dot group relative w-3 h-3 rounded-full bg-slate-800 transition-all duration-300 hover:bg-cyanGlow" data-section="hero">
+            <span class="absolute right-7 top-1/2 -translate-y-1/2 px-3 py-1 rounded-md bg-midnight text-xs font-mono text-cyanGlow opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-slate-800">
+                00. Khởi Đầu Mùa Thi
+            </span>
+        </a>
+        <a href="#journey" class="nav-dot group relative w-3 h-3 rounded-full bg-slate-800 transition-all duration-300 hover:bg-cyanGlow" data-section="journey">
+            <span class="absolute right-7 top-1/2 -translate-y-1/2 px-3 py-1 rounded-md bg-midnight text-xs font-mono text-cyanGlow opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-slate-800">
+                01. Chiến Thuật Ôn Thi
+            </span>
+        </a>
+        <a href="#leaderboard" class="nav-dot group relative w-3 h-3 rounded-full bg-slate-800 transition-all duration-300 hover:bg-cyanGlow" data-section="leaderboard">
+            <span class="absolute right-7 top-1/2 -translate-y-1/2 px-3 py-1 rounded-md bg-midnight text-xs font-mono text-cyanGlow opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-slate-800">
+                02. Top 36 HSG Quốc Gia
+            </span>
+        </a>
+        <a href="#card-generator" class="nav-dot group relative w-3 h-3 rounded-full bg-slate-800 transition-all duration-300 hover:bg-cyanGlow" data-section="card-generator">
+            <span class="absolute right-7 top-1/2 -translate-y-1/2 px-3 py-1 rounded-md bg-midnight text-xs font-mono text-cyanGlow opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-slate-800">
+                03. Thiệp Chúc & Mục Tiêu
+            </span>
+        </a>
+        <a href="#wish-ritual" class="nav-dot group relative w-3 h-3 rounded-full bg-slate-800 transition-all duration-300 hover:bg-cyanGlow" data-section="wish-ritual">
+            <span class="absolute right-7 top-1/2 -translate-y-1/2 px-3 py-1 rounded-md bg-midnight text-xs font-mono text-cyanGlow opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-slate-800">
+                04. Tiếng Chuông May Mắn
+            </span>
+        </a>
+    </nav>
+
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- ================= HERO HEADER ================= -->
+        <section id="hero" class="min-h-screen pt-28 pb-16 flex flex-col justify-center items-center text-center relative">
+            <div class="reveal-node active space-y-6 max-w-4xl mx-auto">
+                <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyanGlow text-xs font-mono tracking-widest uppercase shadow-[0_0_20px_rgba(56,189,248,0.2)]">
+                    <span class="w-2 h-2 rounded-full bg-cyanGlow animate-ping"></span>
+                    MÙA THI HỌC KỲ 2026 • TỰ TIN BỨT PHÁ
+                </div>
+
+                <div class="relative py-2 space-y-3">
+                    <h1 class="text-4xl sm:text-7xl font-black font-outfit text-transparent bg-clip-text bg-gradient-to-r from-cyanGlow via-white to-goldWinner animate-pulse-glow tracking-tight leading-none">
+                        KỲ THI HỌC KỲ 2026
+                    </h1>
+                    <p class="text-2xl sm:text-4xl font-outfit font-extrabold text-white tracking-wide">
+                        BẮT ĐẦU HÀNH TRÌNH CHINH PHỤC ĐIỂM SỐ
+                    </p>
+                </div>
+
+                <p class="text-sm sm:text-lg font-sans text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                    Sự chuẩn bị kỹ lưỡng hôm nay là chìa khóa cho thành công ngày mai. Giữ vững tinh thần tập trung, phương pháp học tập thông minh và bứt phá mọi giới hạn!
+                </p>
+
+                <!-- Quick Action Buttons -->
+                <div class="flex flex-wrap justify-center gap-4 pt-4">
+                    <a href="#journey" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-cyanGlow to-electricBlue text-black font-outfit font-extrabold text-sm uppercase tracking-wider shadow-[0_0_25px_rgba(56,189,248,0.4)] hover:shadow-[0_0_40px_rgba(56,189,248,0.7)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2">
+                        <i class="fa-solid fa-compass"></i>
+                        Khám Phá Chiến Thuật
+                    </a>
+                    <a href="#leaderboard" class="px-7 py-3.5 rounded-xl bg-slate-900 border border-cyan-500/40 text-cyanGlow hover:bg-cyan-950/60 font-outfit font-bold text-sm uppercase tracking-wider transition-all duration-300 flex items-center gap-2">
+                        <i class="fa-solid fa-trophy text-goldWinner"></i>
+                        Top 36 HSG Quốc Gia
+                    </a>
+                </div>
+
+                <!-- Stats Quick Banner -->
+                <div class="grid grid-cols-3 gap-4 max-w-xl mx-auto pt-8">
+                    <div class="glass-panel p-4 rounded-2xl text-center">
+                        <span class="text-2xl font-outfit font-black text-cyanGlow block">100%</span>
+                        <span class="text-[11px] font-mono text-slate-400">TỰ TIN BÀI THI</span>
+                    </div>
+                    <div class="glass-panel p-4 rounded-2xl text-center">
+                        <span class="text-2xl font-outfit font-black text-goldWinner block">36/36</span>
+                        <span class="text-[11px] font-mono text-slate-400">GƯƠNG HỌC SINH GIỎI</span>
+                    </div>
+                    <div class="glass-panel p-4 rounded-2xl text-center">
+                        <span class="text-2xl font-outfit font-black text-emeraldSuccess block">10.0</span>
+                        <span class="text-[11px] font-mono text-slate-400">MỤC TIÊU ĐIỂM TỐI ĐA</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION 01: CHẶNG ĐƯỜNG CHINH PHỤC (SCROLLYTELLING) ================= -->
+        <section id="journey" class="min-h-screen flex items-center py-20 relative">
+            <div class="w-full space-y-12">
+                <div class="reveal-node text-center max-w-3xl mx-auto space-y-3">
+                    <span class="px-3.5 py-1 rounded-full bg-cyan-950 border border-cyan-800 font-mono text-xs text-cyanGlow">CHƯƠNG 01</span>
+                    <h2 class="text-3xl sm:text-5xl font-outfit font-black text-white">
+                        4 Bước Chiến Thuật Ôn Thi Học Kỳ
+                    </h2>
+                    <p class="text-slate-400 text-sm sm:text-base font-sans">
+                        Tối ưu hóa thời gian và tư duy để đạt kết quả cao nhất trong kỳ thi sắp tới.
+                    </p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="reveal-node glass-panel p-6 rounded-2xl space-y-4 hover:-translate-y-2 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-950 border border-cyan-700/50 flex items-center justify-center text-cyanGlow text-xl font-bold font-outfit">
+                            01
+                        </div>
+                        <h3 class="text-lg font-outfit font-bold text-white">LẬP MA TRẬN KIẾN THỨC</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed font-sans">
+                            Sơ đồ hóa các chủ đề quan trọng. Tập trung 80% thời gian cho những phần kiến thức trọng tâm chiếm nhiều điểm.
+                        </p>
+                    </div>
+
+                    <div class="reveal-node glass-panel p-6 rounded-2xl space-y-4 hover:-translate-y-2 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-blue-950 border border-blue-700/50 flex items-center justify-center text-blue-400 text-xl font-bold font-outfit">
+                            02
+                        </div>
+                        <h3 class="text-lg font-outfit font-bold text-white">LUYỆN ĐỀ CÓ THỜI GIAN</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed font-sans">
+                            Giải đề thi thử dưới áp lực thời gian thực tế để rèn phản xạ, phân bổ thời gian hợp lý cho từng dạng bài.
+                        </p>
+                    </div>
+
+                    <div class="reveal-node glass-panel p-6 rounded-2xl space-y-4 hover:-translate-y-2 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-amber-950 border border-amber-700/50 flex items-center justify-center text-goldWinner text-xl font-bold font-outfit">
+                            03
+                        </div>
+                        <h3 class="text-lg font-outfit font-bold text-white">GIỮ TÂM LÝ TẬP TRUNG</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed font-sans">
+                            Giữ bình tĩnh khi bắt đầu nhận đề. Đọc kỹ yêu cầu bài toán, làm từ câu dễ đến câu khó một cách chắc chắn.
+                        </p>
+                    </div>
+
+                    <div class="reveal-node glass-panel p-6 rounded-2xl space-y-4 hover:-translate-y-2 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-950 border border-emerald-700/50 flex items-center justify-center text-emeraldSuccess text-xl font-bold font-outfit">
+                            04
+                        </div>
+                        <h3 class="text-lg font-outfit font-bold text-white">TỐI ƯU ĐIỂM SỐ</h3>
+                        <p class="text-slate-400 text-xs leading-relaxed font-sans">
+                            Kiểm tra lại toàn bộ bài làm trong 10 phút cuối. Đảm bảo tính toán chính xác, trình bày sạch đẹp và rõ ràng.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Study Mindset Quote Card -->
+                <div class="reveal-node glass-panel p-8 rounded-3xl max-w-3xl mx-auto text-center border-cyan-500/30 space-y-4">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-cyan-950 flex items-center justify-center text-cyanGlow text-xl">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+                    <p class="text-base sm:text-xl font-outfit font-medium text-slate-200 italic leading-relaxed">
+                        "Thành công trong kỳ thi không đến từ may mắn, mà đến từ sự kiên trì luyện tập từng ngày và niềm tin vững chắc vào bản thân."
+                    </p>
+                    <span class="text-xs font-mono text-cyanGlow block uppercase tracking-wider">— Lời Chúc Mùa Thi 2026</span>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION 02: BẢNG VÀNG TOP 36 HỌC SINH GIỎI QUỐC GIA ================= -->
+        <section id="leaderboard" class="min-h-screen py-20 relative">
+            <div class="reveal-node space-y-8">
+                <div class="text-center max-w-3xl mx-auto space-y-3">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-950 border border-cyan-500/30 text-cyanGlow text-xs font-mono uppercase">
+                        <span class="w-2 h-2 rounded-full bg-emeraldSuccess animate-pulse"></span>
+                        LIVE API FETCH • DỮ LIỆU CHÍNH THỨC
+                    </div>
+
+                    <h2 class="text-3xl sm:text-5xl font-outfit font-black text-transparent bg-clip-text bg-gradient-to-r from-cyanGlow via-white to-goldWinner">
+                        TOP 36 HỌC SINH GIỎI QUỐC GIA
+                    </h2>
+
+                    <p class="text-slate-300 text-sm sm:text-base font-sans">
+                        Vinh danh những tấm gương sĩ tử xuất sắc nhất kỳ thi Học Sinh Giỏi Quốc Gia. Tiếp thêm cảm hứng và động lực thi cử!
+                    </p>
+                </div>
+
+                <!-- SEARCH & FILTER CONTROLS -->
+                <div class="glass-panel p-4 sm:p-6 rounded-2xl border-cyan-500/20 flex flex-col md:flex-row gap-4 items-center justify-between">
+                    <!-- Search Input -->
+                    <div class="relative w-full md:w-80">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-cyanGlow text-sm"></i>
+                        <input type="text" id="searchInput" placeholder="Tìm tên, trường, tỉnh thành..." class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-midnight border border-slate-700 text-white text-sm focus:outline-none focus:border-cyanGlow transition-all">
+                    </div>
+
+                    <!-- Filter Buttons -->
+                    <div class="flex flex-wrap items-center gap-2 w-full md:w-auto justify-center md:justify-end">
+                        <button class="filter-btn active px-3.5 py-1.5 rounded-lg bg-cyanGlow text-black font-outfit font-bold text-xs transition-all" data-subject="ALL">Tất Cả</button>
+                        <button class="filter-btn px-3.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-cyanGlow font-outfit font-bold text-xs transition-all" data-subject="Toán">Toán</button>
+                        <button class="filter-btn px-3.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-cyanGlow font-outfit font-bold text-xs transition-all" data-subject="Vật Lý">Vật Lý</button>
+                        <button class="filter-btn px-3.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-cyanGlow font-outfit font-bold text-xs transition-all" data-subject="Hóa Học">Hóa Học</button>
+                        <button class="filter-btn px-3.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-cyanGlow font-outfit font-bold text-xs transition-all" data-subject="Tin Học">Tin Học</button>
+                        <button class="filter-btn px-3.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-cyanGlow font-outfit font-bold text-xs transition-all" data-subject="Tiếng Anh">Tiếng Anh</button>
+                    </div>
+
+                    <!-- API Reload Button -->
+                    <button id="refreshApiBtn" class="px-4 py-2.5 rounded-xl bg-cyan-950 border border-cyan-500/40 text-cyanGlow hover:bg-cyanGlow hover:text-black font-outfit font-bold text-xs transition-all flex items-center gap-2 whitespace-nowrap">
+                        <i class="fa-solid fa-rotate-right" id="refreshIcon"></i>
+                        <span>Cập Nhật API</span>
+                    </button>
+                </div>
+
+                <!-- API Status & Count Bar -->
+                <div class="flex items-center justify-between text-xs font-mono px-2 text-slate-400">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emeraldSuccess animate-pulse"></span>
+                        <span>Trạng Thái API: <strong id="apiStatusText" class="text-emeraldSuccess">Connected (200 OK)</strong></span>
+                    </div>
+                    <span>Hiển Thị <strong id="studentCount" class="text-cyanGlow">36</strong> / 36 Sĩ Tử</span>
+                </div>
+
+                <!-- TOP 3 PODIUM -->
+                <div id="podiumContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2 pb-4">
+                    <!-- Dynamic Top 3 Content -->
+                </div>
+
+                <!-- LEADERBOARD DATA TABLE -->
+                <div class="glass-panel rounded-2xl overflow-hidden shadow-2xl border-cyan-500/20">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-cyan-950/60 border-b border-slate-800 font-outfit text-xs text-cyanGlow uppercase tracking-wider">
+                                    <th class="p-4 text-center">Hạng</th>
+                                    <th class="p-4">Sĩ Tử / Trường</th>
+                                    <th class="p-4">Môn Thi</th>
+                                    <th class="p-4 text-center">Giải Thưởng</th>
+                                    <th class="p-4 text-right">Điểm Số</th>
+                                    <th class="p-4 text-center">Chi Tiết</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboardBody" class="divide-y divide-slate-800/60 text-sm font-sans">
+                                <!-- Dynamic Table Content -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION 03: TẠO THIỆP CHÚC THI TỐT & MỤC TIÊU ================= -->
+        <section id="card-generator" class="min-h-screen flex items-center py-20 relative">
+            <div class="w-full grid lg:grid-cols-2 gap-10 items-center">
+                <div class="reveal-node space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-950/80 border border-goldWinner/30 text-xs font-mono text-goldWinner">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        THIỆP MỤC TIÊU MÙA THI
+                    </div>
+
+                    <h2 class="text-3xl sm:text-5xl font-outfit font-black text-white leading-tight">
+                        Tạo Thiệp Chúc Thi Tốt & Bảng Điểm Mục Tiêu
+                    </h2>
+
+                    <p class="text-slate-300 text-sm font-sans leading-relaxed">
+                        Nhập tên, môn học và mục tiêu cá nhân để khởi tạo tấm thiệp truyền cảm hứng cho kỳ thi học kỳ 2026.
+                    </p>
+
+                    <div class="space-y-4 glass-panel p-6 rounded-2xl border-slate-800">
+                        <div>
+                            <label class="text-xs font-mono text-slate-300 block mb-1">Họ và Tên Sĩ Tử:</label>
+                            <input type="text" id="inputName" value="Nguyễn Văn Minh" class="w-full px-4 py-2.5 rounded-xl bg-midnight border border-slate-700 text-white font-sans text-sm focus:outline-none focus:border-cyanGlow">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="text-xs font-mono text-slate-300 block mb-1">Môn Học Trọng Tâm:</label>
+                                <input type="text" id="inputSubject" value="Toán Học" class="w-full px-4 py-2.5 rounded-xl bg-midnight border border-slate-700 text-white font-sans text-sm focus:outline-none focus:border-cyanGlow">
+                            </div>
+                            <div>
+                                <label class="text-xs font-mono text-slate-300 block mb-1">Mục Tiêu Điểm Số:</label>
+                                <input type="text" id="inputTargetScore" value="10.0 / 10" class="w-full px-4 py-2.5 rounded-xl bg-midnight border border-slate-700 text-white font-sans text-sm focus:outline-none focus:border-cyanGlow">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-mono text-slate-300 block mb-1">Lời Chúc Tự Động / Quyết Tâm:</label>
+                            <input type="text" id="inputMessage" value="Tập trung tối đa, bình tĩnh làm bài và đạt điểm 10 tuyệt đối!" class="w-full px-4 py-2.5 rounded-xl bg-midnight border border-slate-700 text-white font-sans text-sm focus:outline-none focus:border-cyanGlow">
+                        </div>
+
+                        <button id="updateCardBtn" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-cyanGlow via-electricBlue to-emeraldSuccess text-black font-outfit font-bold text-sm uppercase tracking-wider shadow-[0_0_20px_rgba(56,189,248,0.3)]">
+                            Cập Nhật Thiệp Mục Tiêu
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD DISPLAY PREVIEW -->
+                <div class="reveal-node">
+                    <div id="studentHonorCard" class="p-8 rounded-3xl bg-gradient-to-br from-midnight via-midnightCard to-midnight border-2 border-goldWinner/50 shadow-[0_0_40px_rgba(251,191,36,0.2)] space-y-6 relative overflow-hidden text-center">
+                        <div class="flex justify-between items-center border-b border-slate-800 pb-3 text-xs font-mono">
+                            <span class="text-cyanGlow"><i class="fa-solid fa-award mr-1"></i>HỌC KỲ 2026</span>
+                            <span class="text-goldWinner font-bold">MỤC TIÊU ĐỖ ĐẠT</span>
+                        </div>
+
+                        <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-cyanGlow via-electricBlue to-emeraldSuccess p-1 shadow-[0_0_20px_rgba(56,189,248,0.3)]">
+                            <div class="w-full h-full bg-midnight rounded-full flex items-center justify-center text-cyanGlow text-3xl font-outfit font-black">
+                                <i class="fa-solid fa-user-graduate"></i>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <span class="text-[10px] font-mono text-slate-400 tracking-widest uppercase">THIỆP CHÚC THI TỐT</span>
+                            <h3 id="cardName" class="text-2xl sm:text-4xl font-outfit font-black text-transparent bg-clip-text bg-gradient-to-r from-cyanGlow via-white to-goldWinner">
+                                NGUYỄN VĂN MINH
+                            </h3>
+                            <p id="cardMessage" class="text-xs text-slate-300 font-sans italic pt-1 max-w-sm mx-auto">
+                                "Tập trung tối đa, bình tĩnh làm bài và đạt điểm 10 tuyệt đối!"
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3 pt-2 text-xs font-mono border-t border-slate-800">
+                            <div class="p-3 rounded-xl bg-midnight border border-slate-800">
+                                <span class="text-slate-400 block text-[10px]">MÔN TRỌNG TÂM</span>
+                                <span id="cardSubject" class="text-cyanGlow font-bold">Toán Học</span>
+                            </div>
+                            <div class="p-3 rounded-xl bg-midnight border border-slate-800">
+                                <span class="text-slate-400 block text-[10px]">MỤC TIÊU</span>
+                                <span id="cardScore" class="text-goldWinner font-bold">10.0 / 10</span>
+                            </div>
+                        </div>
+
+                        <div class="text-[10px] font-mono text-slate-500 flex justify-between items-center pt-2">
+                            <span>Bản Quyền: minhduc290613</span>
+                            <span class="text-emeraldSuccess"><i class="fa-solid fa-circle-check mr-1"></i>TRẠNG THÁI: SẴN SÀNG</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION 04: TIẾNG CHUÔNG CHÚC MÙA THI ================= -->
+        <section id="wish-ritual" class="min-h-screen flex flex-col justify-center items-center text-center py-20 relative">
+            <div class="reveal-node max-w-3xl space-y-8 relative z-10">
+                <div class="inline-block p-6 rounded-full bg-cyan-950/80 border border-cyan-500/40 shadow-[0_0_50px_rgba(56,189,248,0.3)] mb-2 animate-float-gentle">
+                    <i class="fa-solid fa-bell text-5xl text-goldWinner glow-text-gold"></i>
+                </div>
+
+                <h2 class="text-3xl sm:text-6xl font-black font-outfit text-white tracking-tight">
+                    TIẾNG CHUÔNG MAY MẮN
+                </h2>
+
+                <p class="text-slate-300 text-base sm:text-lg font-sans italic max-w-xl mx-auto leading-relaxed">
+                    "Tiếng chuông ngân vang xua tan mọi căng thẳng, mang lại may mắn, sự minh mẫn và điểm số cao nhất cho sĩ tử!"
+                </p>
+
+                <div class="pt-2">
+                    <button id="ringBellBtn" class="relative group px-10 py-5 rounded-2xl bg-gradient-to-r from-cyanGlow via-electricBlue to-emeraldSuccess text-black font-outfit font-black text-xl sm:text-2xl shadow-[0_0_40px_rgba(56,189,248,0.4)] hover:shadow-[0_0_70px_rgba(56,189,248,0.8)] hover:scale-105 active:scale-95 transition-all duration-300">
+                        <span class="relative z-10 flex items-center gap-3 text-black font-extrabold">
+                            <i class="fa-solid fa-campground text-xl"></i>
+                            GÕ CHUÔNG NGUYỆN CẦU THI TỐT
+                        </span>
+                    </button>
+                </div>
+
+                <div class="pt-4 flex items-center justify-center gap-3 text-sm font-mono text-cyanGlow">
+                    <i class="fa-solid fa-star text-goldWinner"></i>
+                    <span>Đã có <strong id="bellRingCount" class="text-goldWinner font-bold text-lg">2026</strong> lượt gõ chuông chúc thi tốt thành công!</span>
+                </div>
+            </div>
+
+            <!-- Footer Copyright Section -->
+            <footer class="mt-24 w-full py-8 border-t border-slate-800 text-center space-y-3 relative z-10">
+                <div class="flex items-center justify-center gap-2 text-sm font-mono text-cyanGlow">
+                    <i class="fa-solid fa-graduation-cap text-goldWinner"></i>
+                    <span>Trải nghiệm mùa thi được phát triển bởi <strong class="text-white glow-text-cyan">minhduc290613</strong></span>
+                </div>
+                <p class="text-xs text-slate-500 font-mono">
+                    © 2026 <span class="text-slate-300 font-semibold">minhduc290613</span>. All rights reserved. Kỳ Thi Học Kỳ 2026 • Top 36 Học Sinh Giỏi Quốc Gia.
+                </p>
+            </footer>
+        </section>
+
+    </main>
+
+
+    <!-- Student Profile Modal (BXH) -->
+    <div id="studentModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="glass-panel max-w-lg w-full p-6 rounded-3xl border-cyan-500/40 space-y-6 relative transform scale-95 transition-all duration-300" id="modalCard">
+            <button id="closeModalBtn" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-900 border border-slate-700 text-slate-400 hover:text-white flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center space-y-3 pt-2">
+                <div id="modalRankBadge" class="inline-block px-4 py-1 rounded-full bg-goldWinner text-black font-outfit font-black text-xs uppercase tracking-wider">
+                    HẠNG 1 - THỦ KHOA QUỐC GIA
+                </div>
+                <h3 id="modalName" class="text-3xl font-outfit font-black text-transparent bg-clip-text bg-gradient-to-r from-cyanGlow via-white to-goldWinner">
+                    Nguyễn Minh Trí
+                </h3>
+                <p id="modalSchool" class="text-xs font-mono text-cyanGlow">THPT Chuyên Hà Nội - Amsterdam</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 text-center text-xs font-mono">
+                <div class="p-3 rounded-xl bg-midnight border border-slate-800">
+                    <span class="text-slate-400 block text-[10px]">MÔN THI</span>
+                    <span id="modalSubject" class="text-cyanGlow font-bold text-sm">Toán Học</span>
+                </div>
+                <div class="p-3 rounded-xl bg-midnight border border-slate-800">
+                    <span class="text-slate-400 block text-[10px]">ĐIỂM SỐ</span>
+                    <span id="modalScore" class="text-goldWinner font-bold text-sm">19.5 / 20</span>
+                </div>
+                <div class="p-3 rounded-xl bg-midnight border border-slate-800">
+                    <span class="text-slate-400 block text-[10px]">GIẢI THƯỞNG</span>
+                    <span id="modalAward" class="text-emeraldSuccess font-bold text-sm">Giải Nhất</span>
+                </div>
+                <div class="p-3 rounded-xl bg-midnight border border-slate-800">
+                    <span class="text-slate-400 block text-[10px]">TỈNH / THÀNH</span>
+                    <span id="modalProvince" class="text-white font-bold text-sm">Hà Nội</span>
+                </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-cyan-950/40 border border-cyan-800/60 text-xs font-sans italic text-slate-300 text-center">
+                "<span id="modalQuote">Tự tin chính là 50% thắng lợi trong bất kỳ kỳ thi nào.</span>"
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JavaScript Master Application Logic -->
+    <script>
+        // ================= TOP 36 HSG DATA API SIMULATOR =================
+        const rawStudentsData = [
+            { rank: 1, name: "Nguyễn Minh Trí", school: "THPT Chuyên Hà Nội - Amsterdam", province: "Hà Nội", subject: "Toán", score: 19.50, award: "Giải Nhất", avatar: "https://placehold.co/120x120/0f172a/38bdf8?text=NT", quote: "Giữ tinh thần tập trung cao độ và làm bài cẩn thận từng phép tính." },
+            { rank: 2, name: "Trần Bảo Nam", school: "THPT Chuyên Lê Hồng Phong", province: "TP. Hồ Chí Minh", subject: "Tin Học", score: 19.25, award: "Giải Nhất", avatar: "https://placehold.co/120x120/0f172a/fbbf24?text=TN", quote: "Tư duy logic mạch lạc là chìa khóa giải quyết bài toán phức tạp." },
+            { rank: 3, name: "Lê Hoàng Yến", school: "THPT Chuyên Quốc Học Huế", province: "Thừa Thiên Huế", subject: "Vật Lý", score: 19.10, award: "Giải Nhất", avatar: "https://placehold.co/120x120/0f172a/34d399?text=LY", quote: "Chinh phục hiện tượng vật lý bằng sự kiên trì và đam mê." },
+            { rank: 4, name: "Phạm Quốc Anh", school: "THPT Chuyên Phan Bội Châu", province: "Nghệ An", subject: "Hóa Học", score: 18.85, award: "Giải Nhất" },
+            { rank: 5, name: "Vũ Hoàng Minh", school: "THPT Chuyên KHTN - ĐHQGHN", province: "Hà Nội", subject: "Toán", score: 18.70, award: "Giải Nhất" },
+            { rank: 6, name: "Đặng Thị Mai", school: "THPT Chuyên Lam Sơn", province: "Thanh Hóa", subject: "Tiếng Anh", score: 18.60, award: "Giải Nhất" },
+            { rank: 7, name: "Hoàng Đức Mạnh", school: "THPT Chuyên Trần Phú", province: "Hải Phòng", subject: "Tin Học", score: 18.50, award: "Giải Nhì" },
+            { rank: 8, name: "Bùi Anh Tuấn", school: "THPT Chuyên Nguyễn Trãi", province: "Hải Dương", subject: "Vật Lý", score: 18.40, award: "Giải Nhì" },
+            { rank: 9, name: "Đỗ Kim Ngân", school: "THPT Chuyên Bắc Ninh", province: "Bắc Ninh", subject: "Hóa Học", score: 18.35, award: "Giải Nhì" },
+            { rank: 10, name: "Ngô Quang Huy", school: "THPT Chuyên Sư Phạm", province: "Hà Nội", subject: "Toán", score: 18.25, award: "Giải Nhì" },
+            { rank: 11, name: "Lương Gia Bách", school: "THPT Chuyên Hoàng Văn Thụ", province: "Hòa Bình", subject: "Tin Học", score: 18.15, award: "Giải Nhì" },
+            { rank: 12, name: "Trịnh Khánh Linh", school: "THPT Chuyên Thái Bình", province: "Thái Bình", subject: "Tiếng Anh", score: 18.00, award: "Giải Nhì" },
+            { rank: 13, name: "Phan Nhật Minh", school: "THPT Chuyên Lương Văn Tụy", province: "Ninh Bình", subject: "Vật Lý", score: 17.90, award: "Giải Nhì" },
+            { rank: 14, name: "Dương Tuấn Kiệt", school: "THPT Chuyên Hùng Vương", province: "Phú Thọ", subject: "Hóa Học", score: 17.80, award: "Giải Nhì" },
+            { rank: 15, name: "Nguyễn Hải Đăng", school: "THPT Chuyên Lê Quý Đôn", province: "Đà Nẵng", subject: "Toán", score: 17.75, award: "Giải Nhì" },
+            { rank: 16, name: "Hà Phương Thảo", school: "THPT Chuyên Bến Tre", province: "Bến Tre", subject: "Tiếng Anh", score: 17.60, award: "Giải Ba" },
+            { rank: 17, name: "Tạ Hoàng Phong", school: "THPT Chuyên Lý Tự Trọng", province: "Cần Thơ", subject: "Tin Học", score: 17.50, award: "Giải Ba" },
+            { rank: 18, name: "Lê Văn Tiến", school: "THPT Chuyên Quảng Trung", province: "Bình Phước", subject: "Vật Lý", score: 17.40, award: "Giải Ba" },
+            { rank: 19, name: "Cao Thanh Hằng", school: "THPT Chuyên Thoại Ngọc Hầu", province: "An Giang", subject: "Hóa Học", score: 17.30, award: "Giải Ba" },
+            { rank: 20, name: "Mai Trọng Khoa", school: "THPT Chuyên Hạ Long", province: "Quảng Ninh", subject: "Toán", score: 17.20, award: "Giải Ba" },
+            { rank: 21, name: "Võ Hoài Nam", school: "THPT Chuyên Chu Văn An", province: "Bình Định", subject: "Tin Học", score: 17.10, award: "Giải Ba" },
+            { rank: 22, name: "Nguyễn Thu Hà", school: "THPT Chuyên Hoàng Lê Đạt", province: "Đắc Lắc", subject: "Tiếng Anh", score: 17.00, award: "Giải Ba" },
+            { rank: 23, name: "Đinh Xuân Trường", school: "THPT Chuyên Tuyên Quang", province: "Tuyên Quang", subject: "Vật Lý", score: 16.90, award: "Giải Ba" },
+            { rank: 24, name: "Trần Cẩm Tú", school: "THPT Chuyên Lào Cai", province: "Lào Cai", subject: "Hóa Học", score: 16.80, award: "Giải Ba" },
+            { rank: 25, name: "Lê Nhật Nam", school: "THPT Chuyên Huỳnh Mẫn Đạt", province: "Kiên Giang", subject: "Toán", score: 16.70, award: "Giải Khuyến Khích" },
+            { rank: 26, name: "Phạm Ngọc Ánh", school: "THPT Chuyên Thái Nguyên", province: "Thái Nguyên", subject: "Tiếng Anh", score: 16.60, award: "Giải Khuyến Khích" },
+            { rank: 27, name: "Nguyễn Hoàng Long", school: "THPT Chuyên Vĩnh Phúc", province: "Vĩnh Phúc", subject: "Tin Học", score: 16.50, award: "Giải Khuyến Khích" },
+            { rank: 28, name: "Vũ Hải Yến", school: "THPT Chuyên Hưng Yên", province: "Hưng Yên", subject: "Vật Lý", score: 16.40, award: "Giải Khuyến Khích" },
+            { rank: 29, name: "Bùi Quốc Việt", school: "THPT Chuyên Hà Giang", province: "Hà Giang", subject: "Hóa Học", score: 16.30, award: "Giải Khuyến Khích" },
+            { rank: 30, name: "Đặng Tiến Dũng", school: "THPT Chuyên Cao Bằng", province: "Cao Bằng", subject: "Toán", score: 16.20, award: "Giải Khuyến Khích" },
+            { rank: 31, name: "Hoàng Yến Nhi", school: "THPT Chuyên Sơn La", province: "Sơn La", subject: "Tiếng Anh", score: 16.10, award: "Giải Khuyến Khích" },
+            { rank: 32, name: "Trần Anh Quân", school: "THPT Chuyên Yên Bái", province: "Yên Bái", subject: "Tin Học", score: 16.00, award: "Giải Khuyến Khích" },
+            { rank: 33, name: "Lê Bảo Ngọc", school: "THPT Chuyên Điện Biên", province: "Điện Biên", subject: "Vật Lý", score: 15.90, award: "Giải Khuyến Khích" },
+            { rank: 34, name: "Nguyễn Văn Phú", school: "THPT Chuyên Lai Châu", province: "Lai Châu", subject: "Hóa Học", score: 15.80, award: "Giải Khuyến Khích" },
+            { rank: 35, name: "Phan Trọng Đạt", school: "THPT Chuyên Lạng Sơn", province: "Lạng Sơn", subject: "Toán", score: 15.70, award: "Giải Khuyến Khích" },
+            { rank: 36, name: "Trịnh Minh Anh", school: "THPT Chuyên Bắc Kạn", province: "Bắc Kạn", subject: "Tiếng Anh", score: 15.60, award: "Giải Khuyến Khích" }
+        ];
+
+        let currentSubjectFilter = 'ALL';
+        let currentSearchQuery = '';
+
+        async function fetchLeaderboardApi() {
+            const apiStatusText = document.getElementById('apiStatusText');
+            const refreshIcon = document.getElementById('refreshIcon');
+            refreshIcon.classList.add('animate-spin');
+            apiStatusText.innerText = 'Fetching live API data...';
+            apiStatusText.className = 'text-goldWinner';
+
+            await new Promise(res => setTimeout(res, 450));
+
+            refreshIcon.classList.remove('animate-spin');
+            apiStatusText.innerText = 'Connected (200 OK)';
+            apiStatusText.className = 'text-emeraldSuccess';
+            renderLeaderboard();
+        }
+
+        function filterStudents() {
+            return rawStudentsData.filter(student => {
+                const matchSubject = currentSubjectFilter === 'ALL' || student.subject === currentSubjectFilter;
+                const matchQuery = student.name.toLowerCase().includes(currentSearchQuery.toLowerCase()) ||
+                                   student.school.toLowerCase().includes(currentSearchQuery.toLowerCase()) ||
+                                   student.province.toLowerCase().includes(currentSearchQuery.toLowerCase());
+                return matchSubject && matchQuery;
+            });
+        }
+
+        function renderLeaderboard() {
+            const students = filterStudents();
+            document.getElementById('studentCount').innerText = students.length;
+
+            const podiumContainer = document.getElementById('podiumContainer');
+            const leaderboardBody = document.getElementById('leaderboardBody');
+
+            const top3 = students.slice(0, 3);
+            podiumContainer.innerHTML = '';
+
+            if (top3.length === 3) {
+                const podiumOrder = [top3[1], top3[0], top3[2]];
+                podiumOrder.forEach(st => {
+                    if (!st) return;
+                    const isFirst = st.rank === 1;
+                    const cardHtml = `
+                        <div class="glass-panel p-6 rounded-3xl border-2 ${isFirst ? 'border-goldWinner shadow-[0_0_35px_rgba(251,191,36,0.25)] md:-translate-y-4' : 'border-cyan-500/30'} text-center space-y-3 relative overflow-hidden">
+                            <div class="absolute top-3 right-3 px-3 py-1 rounded-full text-[10px] font-mono font-bold ${isFirst ? 'bg-goldWinner text-black' : 'bg-cyan-950 text-cyanGlow'}">
+                                ${st.award}
+                            </div>
+                            <div class="w-16 h-16 mx-auto rounded-full border-2 ${isFirst ? 'border-goldWinner' : 'border-cyanGlow'} p-1 bg-midnight">
+                                <img src="${st.avatar || 'https://placehold.co/120x120/0f172a/38bdf8?text=HS'}" class="w-full h-full rounded-full object-cover">
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-mono text-goldWinner uppercase">HẠNG ${st.rank}</span>
+                                <h3 class="text-xl font-outfit font-black text-white">${st.name}</h3>
+                                <p class="text-xs text-slate-400 font-sans">${st.school}</p>
+                            </div>
+                            <div class="flex justify-center gap-3 text-xs font-mono pt-2 border-t border-slate-800">
+                                <span class="text-cyanGlow"><i class="fa-solid fa-book mr-1"></i>${st.subject}</span>
+                                <span class="text-goldWinner font-bold"><i class="fa-solid fa-star mr-1"></i>${st.score} điểm</span>
+                            </div>
+                        </div>
+                    `;
+                    podiumContainer.innerHTML += cardHtml;
+                });
+            } else {
+                podiumContainer.innerHTML = `<div class="col-span-3 text-center text-slate-400 text-xs py-4">Đang hiển thị danh sách lọc bên dưới...</div>`;
+            }
+
+            leaderboardBody.innerHTML = '';
+            students.forEach((st) => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-900/60 transition-all border-b border-slate-800/60";
+                
+                let badgeClass = "bg-slate-900 text-slate-300 border-slate-700";
+                if (st.award === 'Giải Nhất') badgeClass = "bg-amber-950 text-goldWinner border-amber-600/50";
+                if (st.award === 'Giải Nhì') badgeClass = "bg-cyan-950 text-cyanGlow border-cyan-600/50";
+                if (st.award === 'Giải Ba') badgeClass = "bg-blue-950 text-blue-300 border-blue-600/50";
+
+                tr.innerHTML = `
+                    <td class="p-4 text-center font-outfit font-black text-base ${st.rank <= 3 ? 'text-goldWinner' : 'text-slate-400'}">
+                        #${st.rank}
+                    </td>
+                    <td class="p-4">
+                        <div class="font-outfit font-bold text-white text-sm">${st.name}</div>
+                        <div class="text-xs text-slate-400 font-sans">${st.school} (${st.province})</div>
+                    </td>
+                    <td class="p-4 font-mono text-xs text-cyanGlow">
+                        <span class="px-2.5 py-1 rounded bg-cyan-950 border border-cyan-800/60">${st.subject}</span>
+                    </td>
+                    <td class="p-4 text-center">
+                        <span class="px-3 py-1 rounded-full text-[11px] font-mono font-bold border ${badgeClass}">
+                            ${st.award}
+                        </span>
+                    </td>
+                    <td class="p-4 text-right font-outfit font-extrabold text-goldWinner text-base">
+                        ${st.score.toFixed(2)}
+                    </td>
+                    <td class="p-4 text-center">
+                        <button onclick="openStudentModal(${st.rank})" class="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 hover:border-cyanGlow text-xs text-cyanGlow transition-all">
+                            Chi Tiết
+                        </button>
+                    </td>
+                `;
+                leaderboardBody.appendChild(tr);
+            });
+        }
+
+        // Modal Handler
+        const studentModal = document.getElementById('studentModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        function openStudentModal(rank) {
+            const st = rawStudentsData.find(s => s.rank === rank);
+            if (!st) return;
+
+            document.getElementById('modalRankBadge').innerText = `HẠNG ${st.rank} - ${st.award.toUpperCase()}`;
+            document.getElementById('modalName').innerText = st.name;
+            document.getElementById('modalSchool').innerText = st.school;
+            document.getElementById('modalSubject').innerText = st.subject;
+            document.getElementById('modalScore').innerText = `${st.score} / 20`;
+            document.getElementById('modalAward').innerText = st.award;
+            document.getElementById('modalProvince').innerText = st.province;
+            document.getElementById('modalQuote').innerText = st.quote || "Tự tin chính là 50% thắng lợi trong bất kỳ kỳ thi nào.";
+
+            studentModal.classList.remove('opacity-0', 'pointer-events-none');
+            playChimeSound();
+        }
+
+        closeModalBtn.addEventListener('click', () => {
+            studentModal.classList.add('opacity-0', 'pointer-events-none');
+        });
+
+        // Event Listeners for Filters
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.className = 'filter-btn px-3.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-slate-300 hover:text-cyanGlow font-outfit font-bold text-xs transition-all';
+                });
+                e.target.className = 'filter-btn active px-3.5 py-1.5 rounded-lg bg-cyanGlow text-black font-outfit font-bold text-xs transition-all';
+                currentSubjectFilter = e.target.getAttribute('data-subject');
+                renderLeaderboard();
+            });
+        });
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            currentSearchQuery = e.target.value;
+            renderLeaderboard();
+        });
+
+        document.getElementById('refreshApiBtn').addEventListener('click', fetchLeaderboardApi);
+
+
+        // ================= FOCUS AUDIO SYNTHESIZER (WEB AUDIO API) =================
+        let audioCtx = null;
+        let focusAudioRunning = false;
+        let ambientOsc = null;
+        let ambientGain = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+        }
+
+        function toggleFocusAudio() {
+            initAudio();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            const audioIcon = document.getElementById('audioIcon');
+            const audioStatus = document.getElementById('audioStatus');
+
+            if (!focusAudioRunning) {
+                // Start subtle focus ambient sound
+                ambientOsc = audioCtx.createOscillator();
+                ambientGain = audioCtx.createGain();
+
+                ambientOsc.type = 'sine';
+                ambientOsc.frequency.setValueAtTime(220, audioCtx.currentTime); // Soft A3 note
+                ambientGain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+
+                ambientOsc.connect(ambientGain);
+                ambientGain.connect(audioCtx.destination);
+                ambientOsc.start();
+
+                focusAudioRunning = true;
+                audioIcon.className = 'fa-solid fa-volume-high text-emeraldSuccess';
+                audioStatus.innerText = 'Focus Audio: Bật';
+                playChimeSound();
+            } else {
+                if (ambientGain) {
+                    ambientGain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
+                    setTimeout(() => { if (ambientOsc) ambientOsc.stop(); }, 500);
+                }
+                focusAudioRunning = false;
+                audioIcon.className = 'fa-solid fa-headphones text-cyanGlow';
+                audioStatus.innerText = 'Focus Audio: Tắt';
+            }
+        }
+
+        function playBellSound() {
+            initAudio();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(523.25, now); // C5 bell
+            gain.gain.setValueAtTime(0.7, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.5);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 2.5);
+        }
+
+        function playChimeSound() {
+            initAudio();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            const notes = [523.25, 659.25, 783.99, 1046.50];
+            notes.forEach((freq, idx) => {
+                const now = audioCtx.currentTime + idx * 0.07;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, now);
+                gain.gain.setValueAtTime(0.25, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.4);
+            });
+        }
+
+        document.getElementById('audioFocusToggle').addEventListener('click', toggleFocusAudio);
+
+
+        // ================= AMBIENT CANVAS BACKGROUND =================
+        const canvas = document.getElementById('ambientCanvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2 + 0.8;
+                this.speedY = (Math.random() - 0.5) * 0.8;
+                this.speedX = (Math.random() - 0.5) * 0.8;
+                this.alpha = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(56, 189, 248, ${this.alpha})`;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = '#38bdf8';
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            const count = Math.min(Math.floor(width / 15), 70);
+            for (let i = 0; i < count; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            particlesArray.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateCanvas);
+        }
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        initParticles();
+        animateCanvas();
+
+
+        // ================= CARD GENERATOR & RITUAL LOGIC =================
+        document.getElementById('updateCardBtn').addEventListener('click', () => {
+            const name = document.getElementById('inputName').value.trim();
+            const subject = document.getElementById('inputSubject').value.trim();
+            const score = document.getElementById('inputTargetScore').value.trim();
+            const message = document.getElementById('inputMessage').value.trim();
+
+            if (name) document.getElementById('cardName').innerText = name.toUpperCase();
+            if (subject) document.getElementById('cardSubject').innerText = subject;
+            if (score) document.getElementById('cardScore').innerText = score;
+            if (message) document.getElementById('cardMessage').innerText = `"${message}"`;
+
+            playChimeSound();
+            triggerFlash();
+        });
+
+        // Flash Trigger
+        function triggerFlash() {
+            const flash = document.getElementById('flashOverlay');
+            flash.style.opacity = '1';
+            setTimeout(() => { flash.style.opacity = '0'; }, 150);
+        }
+
+        // Bell Ring Counter Ritual
+        let bellCount = 2026;
+        document.getElementById('ringBellBtn').addEventListener('click', () => {
+            playBellSound();
+            triggerFlash();
+            bellCount++;
+            document.getElementById('bellRingCount').innerText = bellCount.toLocaleString('vi-VN');
+        });
+
+
+        // ================= SCROLL OBSERVER & PROGRESS BAR =================
+        const revealNodes = document.querySelectorAll('.reveal-node');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+
+        revealNodes.forEach(node => observer.observe(node));
+
+        const progressBar = document.getElementById('progressBar');
+        const sections = document.querySelectorAll('section');
+        const navDots = document.querySelectorAll('.nav-dot');
+
+        window.addEventListener('scroll', () => {
+            const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const currentScroll = window.scrollY;
+            progressBar.style.width = ((currentScroll / totalScroll) * 100) + '%';
+
+            let currentSection = '';
+            sections.forEach(section => {
+                if (pageYOffset >= (section.offsetTop - section.clientHeight / 3)) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navDots.forEach(dot => {
+                dot.classList.remove('bg-cyanGlow', 'scale-125');
+                dot.classList.add('bg-slate-800');
+                if (dot.getAttribute('data-section') === currentSection) {
+                    dot.classList.remove('bg-slate-800');
+                    dot.classList.add('bg-cyanGlow', 'scale-125');
+                }
+            });
+        });
+
+        // Initial Data Fetch
+        fetchLeaderboardApi();
+    </script>
+</body>
+</html>
